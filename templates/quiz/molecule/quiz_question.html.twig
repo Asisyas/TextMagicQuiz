@@ -1,0 +1,14 @@
+<div class="card">
+    <div class="card-body">
+        <h5 class="card-title">Question #{{ question_index }}
+            {% if question.isCorrect %} ✅ {% elseif question.isCorrect is not null %} &#10060; {% endif %}
+        </h5>
+        <p class="card-text">{{ question.text }}</p>
+
+        <hr class="hr hr-blurry" />
+        {{ include('quiz/molecule/quiz_answer_form.html.twig', {
+            'form': question_answer_form,
+            'question': question
+        }) }}
+    </div>
+</div>

@@ -1,0 +1,36 @@
+# This file is the entry point to configure your own services.
+# Files in the packages/ subdirectory configure your dependencies.
+
+# Put parameters here that don't need to change on each machine where the app is deployed
+# https://symfony.com/doc/current/best_practices.html#use-parameters-for-application-configuration
+parameters:
+
+services:
+    # default configuration for services in *this* file
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+
+    # makes classes in src/ available to be used as services
+    # this creates a service per class whose id is the fully-qualified class name
+    App\:
+        resource: '../src/'
+        exclude:
+            - '../src/DependencyInjection/'
+            - '../src/Entity/'
+            - '../src/Kernel.php'
+    
+    # add more service definitions when explicit configuration is needed
+    # please note that last definitions always *replace* previous ones
+    
+    App\Question\Factory\Expander\Entity\QuestionEntityExpanderInterface: '@App\Question\Factory\Expander\Entity\QuestionEntityExpander'
+    App\Question\UseCase\QuestionAddUseCaseInterface: '@App\Question\UseCase\QuestionAddUseCase'
+    App\Question\UseCase\QuestionLookupUseCaseInterface: '@App\Question\UseCase\QuestionLookupUseCase'
+    App\Question\UseCase\QuestionCheckAnswersUseCaseInterface: '@App\Question\UseCase\QuestionCheckAnswersUseCase'
+    
+    App\Quiz\UseCase\QuizFindByUserAndQuizIdUseCaseInterface: '@App\Quiz\UseCase\QuizFindByUserAndQuizIdUseCase'
+    App\Quiz\UseCase\QuizQuestionAnswerUseCaseInterface: '@App\Quiz\UseCase\QuizQuestionAnswerUseCase'
+    App\Quiz\UseCase\QuizInitUseCaseInterface: '@App\Quiz\UseCase\QuizInitUseCase'
+    App\Quiz\UseCase\QuizFindCurrentUseCaseInterface: '@App\Quiz\UseCase\QuizFindCurrentUseCase'
+    App\Quiz\Factory\Expander\Entity\QuizEntityExpanderInterface: '@App\Quiz\Factory\Expander\Entity\QuizEntityExpander'
+    App\Quiz\Transformer\Expander\QuizTransferExpanderInterface: '@App\Quiz\Transformer\Expander\QuizTransferExpander'

@@ -1,0 +1,14 @@
+<div class="scrollable-menu">
+    <nav class="nav">
+        {% for question in questions %}
+            <a
+                href="{{ path('app_quiz_show', {'questionIndex': loop.index}) }}"
+                class="nav-link
+                        {% if question_index == loop.index %} answer_pagination__current {% endif %}
+                        {% if question.isCorrect %} answer_pagination__answered_correct
+                        {% elseif question.isCorrect is not null %} answer_pagination__answered_incorrect {% endif %}
+                    "
+            >{{ loop.index }}</a>
+        {% endfor %}
+    </nav>
+</div>

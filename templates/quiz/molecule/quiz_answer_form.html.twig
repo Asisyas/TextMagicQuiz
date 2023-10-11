@@ -1,0 +1,42 @@
+{{ form_start(form) }}
+    {{ form_widget(form.questionId) }}
+<label for="answers-collection">Answers</label>
+<div id="answers-collection">
+    {% for variant in question.variants %}
+        <div class="form-check">
+            <input
+                class="form-check-input
+                {% if variant.id in question.variantsCorrect and
+                    variant.id in question.answers
+                %}
+                    is-valid
+                {% elseif variant.id in question.answers %}
+                    is-invalid
+                {% endif %}"
+                type="checkbox"
+                name="quiz_question_answer[answerIds][]"
+                value="{{ variant.id }}"
+                id="answer-{{ variant.id }}"
+                {% if question.answers %}
+                    disabled
+                {% endif %}
+                {% if variant.id in question.answers %}
+                    checked
+                {% endif %}
+            >
+            <label
+                class="form-check-label"
+                for="answer-{{ variant.id }}"
+            >
+                {{ variant.text }}
+            </label>
+        </div>
+    {% endfor %}
+    {% if not question.answers %}
+    <div class="form-group mt-3">
+        <button type="submit" class="btn btn-primary">Answer</button>
+    </div>
+    {% endif %}
+</div>
+
+{{ form_end(form) }}

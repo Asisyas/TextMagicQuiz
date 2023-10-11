@@ -1,0 +1,83 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Hello QuizController!{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .answer_pagination__current {
+            border: 3px solid blue !important;
+        }
+
+        .answer_pagination__answered_correct {
+            background-color: green !important;;
+            color: #fff !important;
+        }
+
+        .answer_pagination__answered_incorrect {
+            background-color: red !important;;
+            color: #fff !important;
+        }
+
+        .scrollable-menu {
+            overflow-x: auto;
+            white-space: nowrap;
+            border: 1px solid #dee2e6; /* Бордер вокруг всего контейнера */
+            border-radius: 5px; /* Скругление углов */
+            margin-top: 20px; /* Отступ сверху для разделения заголовка и списка */
+        }
+
+        .scrollable-menu .nav-link {
+            display: inline-block;
+            border: 1px solid #dee2e6; /* Бордер вокруг каждого элемента списка */
+            border-radius: 5px; /* Скругление углов */
+            margin: 5px; /* Отступ между элементами списка */
+            padding: 10px 15px; /* Внутренние отступы для каждого элемента списка */
+            transition: background-color 0.3s; /* Плавное изменение фона при наведении */
+        }
+
+        .scrollable-menu .nav-link:hover {
+            background-color: #f8f9fa; /* Цвет фона при наведении на элемент списка */
+        }
+
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <nav class="navbar navbar-light bg-light">
+            <div class="container-fluid">
+                <a class="navbar-brand">Quiz #{{ quiz.quizId }}</a>
+                <form class="d-flex align-items-center">
+                    <span class="me-3">{{ app.user.userIdentifier }}</span>
+                    <a class="btn btn-outline-success" href="{{ path('app_authentication') }}">Switch user</a>
+                </form>
+            </div>
+        </nav>
+
+        <div class="row">
+            <div class="col-12">
+                {{ include('quiz/molecule/quiz_question_list.html.twig', {
+                    'questions': quiz.questions,
+                    'question_index': question_index
+                }) }}
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-12">
+                {{ include('quiz/molecule/quiz_question.html.twig', {
+                    'question': question,
+                    'question_answer_form': question_answers_form,
+                    'question_index': question_index,
+                }) }}
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-12">
+                {{ include('quiz/molecule/quiz_finished.html.twig') }}
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
