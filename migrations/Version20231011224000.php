@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20231011214147 extends AbstractMigration
+final class Version20231011224000 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -19,13 +19,20 @@ final class Version20231011214147 extends AbstractMigration
 
     public function up(Schema $schema): void
     {
-        // this up() migration is auto-generated, please modify it to your needs
-        $this->addSql('ALTER TABLE quiz_answer ADD is_correct BOOLEAN NOT NULL');
+        $questions_sql = explode("\n", file_get_contents(__DIR__ . '/question_collection_v2.sql'));
+        foreach ($questions_sql as $sql) {
+            if(!$sql) {
+                continue;
+            }
+
+            $this->addSql($sql);
+        }
     }
 
     public function down(Schema $schema): void
     {
         // this down() migration is auto-generated, please modify it to your needs
         $this->addSql('CREATE SCHEMA public');
-        $this->addSql('ALTER TABLE quiz_answer DROP is_correct');}
+        $this->addSql('CREATE UNIQUE INDEX idx_quiz_question_unique ON quiz_answer (quiz_id, question_id)');
+    }
 }

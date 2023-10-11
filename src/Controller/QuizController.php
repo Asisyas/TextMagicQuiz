@@ -5,6 +5,7 @@ namespace App\Controller;
 use App\Form\QuizQuestionAnswerType;
 use App\Quiz\Exception\QuizInitFailedException;
 use App\Quiz\QuizFacadeInterfaceAndQuizIdBy;
+use App\Quiz\Status\StatusEnum;
 use App\Shared\Transfer\QuizInitTransfer;
 use App\Shared\Transfer\QuizQuestionAnswerTransfer;
 use App\Shared\Transfer\QuizQuestionTransfer;
@@ -71,7 +72,8 @@ class QuizController extends AbstractController
                 'quiz' => $quiz,
                 'question_index' => $questionIndex,
                 'question' => $question,
-                'question_answers_form' => $quizQuestionAnswerType->createView()
+                'question_answers_form' => $quizQuestionAnswerType->createView(),
+                'is_quiz_completed' => $quiz->status === StatusEnum::COMPLETED
             ]
         );
     }

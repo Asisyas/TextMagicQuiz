@@ -73,11 +73,13 @@
                 }) }}
             </div>
         </div>
-        <div class="row">
-            <div class="col-12">
-                {{ include('quiz/molecule/quiz_finished.html.twig') }}
+        {% if is_quiz_completed %}
+            <div class="row">
+                <div class="col-12">
+                    {{ include('quiz/molecule/quiz_finished.html.twig') }}
+                </div>
             </div>
-        </div>
+        {% endif %}
     </div>
 
 {% endblock %}

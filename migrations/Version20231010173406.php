@@ -37,7 +37,6 @@ final class Version20231010173406 extends AbstractMigration
         $this->addSql('CREATE INDEX IDX_6033B00B853CD175 ON quiz_question (quiz_id)');
         $this->addSql('CREATE INDEX IDX_6033B00B1E27F6BF ON quiz_question (question_id)');
         $this->addSql('CREATE TABLE quiz_answer (id INT NOT NULL, question_id INT DEFAULT NULL, quiz_id INT NOT NULL, is_correct BOOLEAN NOT NULL, PRIMARY KEY(id))');
-        $this->addSql('CREATE UNIQUE INDEX idx_quiz_question_unique ON quiz_answer (quiz_id, question_id)');
         $this->addSql('CREATE UNIQUE INDEX IDX_QUIZ_QUESTION_UNIQUE ON quiz_answer (quiz_id, question_id)');
         $this->addSql('CREATE INDEX IDX_3799BA7C1E27F6BF ON quiz_answer (question_id)');
         $this->addSql('CREATE INDEX IDX_3799BA7C853CD175 ON quiz_answer (quiz_id)');
@@ -51,7 +50,6 @@ final class Version20231010173406 extends AbstractMigration
         $this->addSql('ALTER TABLE quiz_question ADD CONSTRAINT FK_6033B00B1E27F6BF FOREIGN KEY (question_id) REFERENCES question (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE quiz_answer ADD CONSTRAINT FK_3799BA7C1E27F6BF FOREIGN KEY (question_id) REFERENCES question (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE quiz_answer ADD CONSTRAINT FK_3799BA7C853CD175 FOREIGN KEY (quiz_id) REFERENCES quiz (id) NOT DEFERRABLE INITIALLY IMMEDIATE');
-        $this->addSql('ALTER TABLE quiz_answer ADD is_correct BOOLEAN NOT NULL');
         $this->addSql('ALTER TABLE quiz_answer_answer ADD CONSTRAINT FK_29DA293AC5339E1 FOREIGN KEY (quiz_answer_id) REFERENCES quiz_answer (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
         $this->addSql('ALTER TABLE quiz_answer_answer ADD CONSTRAINT FK_29DA293AA334807 FOREIGN KEY (answer_id) REFERENCES answer (id) ON DELETE CASCADE NOT DEFERRABLE INITIALLY IMMEDIATE');
     }
@@ -70,7 +68,6 @@ final class Version20231010173406 extends AbstractMigration
         $this->addSql('ALTER TABLE question DROP CONSTRAINT FK_B6F7494EF8A0C8EF');
         $this->addSql('ALTER TABLE quiz_question DROP CONSTRAINT FK_6033B00B853CD175');
         $this->addSql('ALTER TABLE quiz_question DROP CONSTRAINT FK_6033B00B1E27F6BF');
-        $this->addSql('DROP INDEX idx_quiz_question_unique');
         $this->addSql('ALTER TABLE quiz_answer DROP CONSTRAINT FK_3799BA7C1E27F6BF');
         $this->addSql('ALTER TABLE quiz_answer DROP CONSTRAINT FK_3799BA7C853CD175');
         $this->addSql('ALTER TABLE quiz_answer_answer DROP CONSTRAINT FK_29DA293AC5339E1');

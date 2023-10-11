@@ -13,6 +13,7 @@ class AuthenticateUserType extends AbstractType
         $builder
             ->add('username', null, [
                 'required'  => true,
+                'label' => ''
             ])
         ;
     }

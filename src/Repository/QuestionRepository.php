@@ -63,13 +63,12 @@ class QuestionRepository extends ServiceEntityRepository
             ->andWhere('q.id = :question_id')
             ->andWhere('a.id IN (:user_answers_id)')
             ->setParameters([
-                'question_id'   => $questionId,
+                'question_id' => $questionId,
                 'user_answers_id' => $userAnswersIdArray,
             ])
             ->getQuery()
-            ->getSingleScalarResult()
-        ;
+            ->getSingleScalarResult();
 
-        return count($userAnswersIdArray) == $correctCount;
+        return count($userAnswersIdArray) === (int)$correctCount;
     }
 }
