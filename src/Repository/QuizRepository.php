@@ -69,7 +69,7 @@ class QuizRepository extends ServiceEntityRepository
         LEFT JOIN answer ca ON acc.id = ca.answer_correct_combinations_id
         WHERE
             qz.id = :quiz_id
-        ORDER BY q.id DESC
+        ORDER BY q.id, pa.id DESC
         ";
 
         $selectedFields = [
