@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\QuizQuestionAnswerType;
+use App\Quiz\Exception\QuizAlreadyAnsweredException;
 use App\Quiz\Exception\QuizInitFailedException;
 use App\Quiz\QuizFacadeInterfaceAndQuizIdBy;
 use App\Quiz\Status\StatusEnum;
@@ -59,13 +60,15 @@ class QuizController extends AbstractController
     ]
     public function showQuiz(Request $request, int $questionIndex): Response
     {
+        $userId = $this->getUser()->getUserIdentifier();
         $quiz_id = $request->getSession()->get('quiz_id');
         $quiz = $this
             ->quizFacade
-            ->findQuizByUserAndQuizId($this->getUser()->getUserIdentifier(), $quiz_id)
+            ->findQuizByUserAndQuizId($userId, $quiz_id)
         ;
         $question = $this->lookupQuizQuestionByIndex($quiz, $questionIndex);
         $quizQuestionAnswerType = $this->createQuizQuestionForm($question);
+
         return $this->render(
             'quiz/index.html.twig',
             [
@@ -89,16 +92,17 @@ class QuizController extends AbstractController
         $question = $this->lookupQuizQuestionByIndex($quiz, $questionIndex);
         $quizQuestionAnswerType = $this->createQuizQuestionForm($question);
         $quizQuestionAnswerType->handleRequest($request);
+        $response = $this->redirectToRoute('app_quiz_show', [
+            'questionIndex' => $questionIndex,
+        ]);
         if (!$quizQuestionAnswerType->isSubmitted() || !$quizQuestionAnswerType->isValid()) {
-            throw new BadRequestHttpException();
+            return $response;
         }
 
         $questionAnswerTransfer = $quizQuestionAnswerType->getData();
         $this->quizFacade->makeQuestionAnswer($questionAnswerTransfer, $this->getUser()->getUserIdentifier());
 
-        return $this->redirectToRoute('app_quiz_show', [
-            'questionIndex' => $questionIndex,
-        ]);
+        return $response;
     }
 
     private function createQuizQuestionForm(QuizQuestionTransfer $quizQuestionTransfer): FormInterface

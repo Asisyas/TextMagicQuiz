@@ -1,6 +1,9 @@
 {{ form_start(form) }}
     {{ form_widget(form.questionId) }}
 <label for="answers-collection"><b>Answers</b></label>
+<div class="my-custom-class-for-errors">
+    {{ form_errors(form) }}
+</div>
 <div id="answers-collection">
     {% for variant in question.variants %}
         <div class="form-check">
