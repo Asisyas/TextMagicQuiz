@@ -24,7 +24,7 @@
 
 ## Features
 
-- The quiz can be taken multiple times; however, you can only take one quiz at a time.
+- The quiz can be taken multiple times.
 - Questions are selected randomly. However, if there are only a few questions, you might not notice the randomness.
 
 ## Additional Capabilities
