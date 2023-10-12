@@ -13,7 +13,7 @@
 ### Starting the Quiz
 
 - **Http:**
-    - After launching the containers, open the main page and enter any name.
+    - After launching the containers, open the [home page](https://localhost) and enter any name.
 
 - **Cli:**
     - Run the command `make quiz <username>`. If you don't have `make` installed, you can also use:
